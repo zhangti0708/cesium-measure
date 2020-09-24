@@ -37,7 +37,7 @@
         <button type="button" class="layui-btn layui-btn-sm">空间距离</button>
         <button type="button" class="layui-btn layui-btn-sm">空间面积</button>
         <button type="button" class="layui-btn layui-btn-sm">三角量测</button>
-        <button type="button" class="layui-btn layui-btn-disabled layui-btn-sm">空间范围</button>
+        <button type="button" class="layui-btn layui-btn-sm">加载模型</button>
       </div>
       <br>
       <div>清除:
@@ -68,6 +68,13 @@
       url: 'http://earthsdk.com/v/last/Apps/assets/dayanta/tileset.json'
     }));
 
+    function loadModel() {
+
+      viewer.flyTo(viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(116.32878855240442, 39.95208707482746, 0.0),
+        model: { uri: './src/qiche.gltf' }
+      }))
+    }
     tilesets.readyPromise.then(function (tileset) {
 
       viewer.flyTo(tileset)
@@ -76,11 +83,12 @@
         let text = $(this).text()
         if (text) {
           switch (text) {
-            case '贴地': clampToGround = !clampToGround; break;
+            case '不贴地': clampToGround = false; break;
             case '空间距离': measure.drawLineMeasureGraphics({ clampToGround: clampToGround, callback: () => { } }); break;
             case '空间面积': measure.drawAreaMeasureGraphics({ clampToGround: clampToGround, callback: () => { } }); break;
             case '三角量测': measure.drawTrianglesMeasureGraphics({ callback: () => { } }); break;
             case '清除量测': measure._drawLayer.entities.removeAll(); break;
+            case '加载模型': loadModel(); break;
           }
         }
       })

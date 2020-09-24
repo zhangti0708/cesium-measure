@@ -129,7 +129,8 @@
 
                         if (pick &&
                             pick.primitive instanceof Cesium.Cesium3DTileFeature
-                            || pick && pick.primitive instanceof Cesium.Cesium3DTileset) { //模型上拾取
+                            || pick && pick.primitive instanceof Cesium.Cesium3DTileset
+                            || pick && pick.primitive instanceof Cesium.Model) { //模型上拾取
                             isOn3dtiles = true;
                         }
                         // 3dtilset
@@ -141,7 +142,7 @@
                                 if (cartographic.height < 0) cartographic.height = 0;
                                 let lon = Cesium.Math.toDegrees(cartographic.longitude)
                                     , lat = Cesium.Math.toDegrees(cartographic.latitude)
-                                    , height = cartographic.height;//模型高度 
+                                    , height = cartographic.height;
                                 cartesian = this.transformWGS84ToCartesian({ lng: lon, lat: lat, alt: height })
 
                             }
